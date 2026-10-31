@@ -15,14 +15,14 @@
     {
       "binding": "DB",
       "database_name": "infinex-booklet-db",
-      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+      "database_id": "ff2ac8a9-6cdd-4661-97b6-d363f5194709"
     }
   ],
   // ロゴ・写真・表紙などの画像を保存する場所
   "kv_namespaces": [
     {
       "binding": "FILES",
-      "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+      "id": "fd9c79178a334a58891e4cf936a078de"
     }
   ],
   "observability": { "enabled": true }

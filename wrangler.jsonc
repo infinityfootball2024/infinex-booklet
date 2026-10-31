@@ -1,0 +1,29 @@
+{
+  // INFINEX 冊子
+  // すべてのファイルを同じ場所に置く構成です（フォルダ不要）。
+  // 画面のファイルはそのまま配信し、/api/ だけを worker.js で処理します。
+  // 配信しないファイルは .assetsignore に書いています。
+  "name": "infinex-booklet",
+  "main": "worker.js",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS"
+  },
+  // 冊子の文章・構成を保存するデータベース
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "infinex-booklet-db",
+      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+    }
+  ],
+  // ロゴ・写真・表紙などの画像を保存する場所
+  "kv_namespaces": [
+    {
+      "binding": "FILES",
+      "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+    }
+  ],
+  "observability": { "enabled": true }
+}

@@ -1,0 +1,9 @@
+.git
+.wrangler
+node_modules
+worker.js
+wrangler.jsonc
+schema.sql
+README.md
+.dev.vars
+.dev.vars.example

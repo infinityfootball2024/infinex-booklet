@@ -227,31 +227,37 @@ table.ptab input{width:100%;box-sizing:border-box;border:1px solid var(--line);b
 .pg .md-img .im{width:100%;background:center/contain no-repeat}
 .pg .md-img .cp{text-align:center;font-size:calc(var(--fs0) * .9);margin-top:1mm}
 .pg .brk{display:flex;flex-direction:column}
-.pg .brk .svgbox{flex:1;min-height:0}
+.pg .brk .svgbox{flex:1;min-height:0;position:relative}
 .pg .brk .bnote{flex:none;font-size:calc(var(--fs0) * .9);margin-top:2mm}
 .pg .cover-fb .lg{width:46mm;height:46mm;background:center/contain no-repeat;margin:0 auto 8mm}
 .pg .cover-fb .ct{font-size:11pt;margin-top:3mm}
-.pg table.t{width:100%;border-collapse:collapse;font-size:calc(var(--fs0) * .98)}
+.pg table.t{width:100%;border-collapse:collapse;font-size:calc(var(--fs0) * .98);table-layout:fixed}
+.pg .fl{display:flex;align-items:center;gap:1.4mm;white-space:nowrap;overflow:hidden;min-width:0}
+.pg .fl.c{justify-content:center}
+.pg .fl .lg{flex:none;width:4.8mm;height:4.8mm;background:center/contain no-repeat}
+.pg .fl>span{flex:none}
+.pg table.t td.sep{text-align:center;padding-left:0;padding-right:0}
 .pg table.t th,.pg table.t td{padding:1.1mm 1.6mm;vertical-align:middle}
 .pg .cap{font-weight:700;display:flex;justify-content:space-between;gap:3mm;align-items:flex-end;margin-bottom:1.2mm}
 .pg .cap small{font-weight:400;font-size:calc(var(--fs0) * .9)}
 .pg .notes{font-size:calc(var(--fs0) * .95)}
 /* team list */
 .pg .tl-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 8mm}
-.pg .tl-row{display:grid;grid-template-columns:6mm 1fr auto;gap:2mm;padding:.5mm 0}
+.pg .tl-row{display:grid;grid-template-columns:6mm minmax(0,1fr) auto;gap:2mm;padding:.5mm 0}
 .pg .tl-row .c{color:var(--ink);font-size:calc(var(--fs0) * .92)}
 /* draw */
 .pg .drawgrid{display:grid;grid-template-columns:repeat(var(--dc,4),1fr);gap:4mm}
 .pg .grp .gh{font-weight:700;text-align:center;padding:1mm;font-family:var(--hf),serif}
 .pg .grp ol{margin:0;padding:0;list-style:none}
-.pg .grp li{display:grid;grid-template-columns:5mm 1fr;padding:1mm 1.5mm;font-size:calc(var(--fs0) * .95);min-height:7mm;align-items:center}
+.pg .grp li{display:grid;grid-template-columns:4mm minmax(0,1fr);padding:0 1.5mm;font-size:calc(var(--fs0) * .95);height:8.5mm;align-items:center}
+.pg .grp li .fl .lg{width:5.5mm;height:5.5mm}
 /* team cards */
 .pg .tgrid{display:grid;gap:4mm}
 .pg .tc{display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .pg .tc-h{display:flex;gap:2.5mm;align-items:center;flex:none}
 .pg .tc-logo{flex:none;width:12mm;height:12mm;background:#fff center/contain no-repeat}
 .pg .tc-name{flex:1;min-width:0}
-.pg .tc-name b{display:block;font-family:var(--hf),sans-serif;font-size:calc(var(--fs0) * 1.35);line-height:1.25}
+.pg .tc-name b{display:flex;white-space:nowrap;overflow:hidden;font-family:var(--hf),sans-serif;font-size:calc(var(--fs0) * 1.35);line-height:1.25}
 .pg .tc-name small{display:block;font-size:calc(var(--fs0) * .85)}
 .pg .tc-photo{flex:none;background:#E9ECF1 center/cover no-repeat;margin-top:2mm}
 .pg .tc-meta{flex:none;font-size:calc(var(--fs0) * .9);margin-top:1.5mm;display:flex;gap:4mm;flex-wrap:wrap}
@@ -444,10 +450,10 @@ const DB={db:null,
 const PAPER={A4:{w:210,h:297,label:'A4（210×297mm）'},B5:{w:182,h:257,label:'B5（182×257mm）'},A5:{w:148,h:210,label:'A5（148×210mm）'}};
 const FONTS=['Noto Sans JP','Noto Serif JP','Zen Kaku Gothic New','Shippori Mincho','BIZ UDPGothic','BIZ UDPMincho'];
 const BUILTIN_THEMES=[
-  {id:'official',name:'公式（厳格）',base:'official',builtin:true,desc:'協会配布冊子の定番。明朝見出し、全罫線の表、中央ノンブル。',
-   ink:'#000000',accent:'#1B2A5E',accent2:'#7A5C12',soft:'#ECEEF3',rule:'#000000',paper:'#FFFFFF',hf:'Noto Serif JP',bf:'Noto Sans JP',fs:9,mt:18,mb:18,ml:16,mr:16},
+  {id:'official',name:'公式（厳格）',base:'official',builtin:true,desc:'協会配布冊子の定番。全罫線の表、中央ノンブル。',
+   ink:'#000000',accent:'#1B2A5E',accent2:'#7A5C12',soft:'#ECEEF3',rule:'#000000',paper:'#FFFFFF',hf:'Noto Sans JP',bf:'Noto Sans JP',fs:9,mt:18,mb:18,ml:16,mr:16},
   {id:'pro',name:'プロフェッショナル',base:'pro',builtin:true,desc:'マッチデープログラム調。章番号、色帯の表、小口のツメ見出し。',
-   ink:'#181B22',accent:'#0042B8',accent2:'#E9A800',soft:'#EEF2F8',rule:'#C7CDD8',paper:'#FFFFFF',hf:'Zen Kaku Gothic New',bf:'Noto Sans JP',fs:9,mt:20,mb:18,ml:15,mr:15}
+   ink:'#181B22',accent:'#0042B8',accent2:'#E9A800',soft:'#EEF2F8',rule:'#C7CDD8',paper:'#FFFFFF',hf:'Noto Sans JP',bf:'Noto Sans JP',fs:9,mt:20,mb:18,ml:15,mr:15}
 ];
 const TYPES={
   cover:{label:'表紙',k:'表紙'}, toc:{label:'目次',k:'目次'}, text:{label:'文章ページ',k:'文章'}, officers:{label:'役員名簿',k:'名簿'},
@@ -685,6 +691,13 @@ function flow(ch,blocks,opt={}){
 function bg(img,contain){return img?`background-image:url('${img}')`:'';}
 
 /* --- builders --- */
+function logoOf(name){const m=S._logoMap||(S._logoMap=new Map(S.p.teams.filter(t=>t.logo).map(t=>[norm(t.name),t.logo])));return m.get(norm(name))||'';}
+function nameCell(name,logo=true){const lg=logo?logoOf(name):'';return `<div class="fl">${lg?`<i class="lg" style="${bg(lg)}"></i>`:''}<span>${esc(name)}</span></div>`;}
+/* 枠に入らない1行の文字は、その要素だけ文字を小さくして収める */
+function fitLines(root){$$('.fl',root).forEach(el=>{if(el.scrollWidth<=el.clientWidth+.5)return;
+  const base=parseFloat(getComputedStyle(el).fontSize);let k=1,g=0;
+  while(el.scrollWidth>el.clientWidth+.5&&k>.5&&g++<30){k*=.95;el.style.fontSize=(base*k)+'px';
+}});}
 function buildCover(ch,back){
   const pg=shellEl(),bl=$('.bleedlayer',pg),th=theme(),m=S.p.meta;
   if(ch.data.image){bl.innerHTML=`<div class="img" style="position:absolute;inset:0;${bg(ch.data.image)}"></div>`;}
@@ -713,9 +726,9 @@ function buildToc(ch,entries){
 function buildTeamList(ch){
   const by=ch.data.groupBy||'region';const reg=new Map();S.p.teams.forEach(t=>{const r=(by==='none'?'':by==='group'?t.group:t.region)||'出場チーム';if(!reg.has(r))reg.set(r,[]);reg.get(r).push(t);});
   const blocks=[];
-  reg.forEach((ts,r)=>{const half=Math.ceil(ts.length/2);const col=a=>a.map((t,i)=>`<div class="tl-row"><span>${i+1}</span><span>${esc(t.name)}</span><span class="c">${esc(t.pref||'')}</span></div>`).join('');
+  reg.forEach((ts,r)=>{const half=Math.ceil(ts.length/2);const col=a=>a.map((t,i)=>`<div class="tl-row"><span>${i+1}</span>${nameCell(t.name,false)}<span class="c">${esc(t.pref||'')}</span></div>`).join('');
     const a=ts.slice(0,half),b=ts.slice(half);
-    blocks.push({html:`<div class="blk"><div class="tl-h">【${esc(r)}】<small style="font-weight:400;font-size:.75em;margin-left:2mm">${ts.length}チーム</small></div><div class="tl-cols"><div>${col(a)}</div><div>${b.map((t,i)=>`<div class="tl-row"><span>${half+i+1}</span><span>${esc(t.name)}</span><span class="c">${esc(t.pref||'')}</span></div>`).join('')}</div></div></div>`});});
+    blocks.push({html:`<div class="blk"><div class="tl-h">【${esc(r)}】<small style="font-weight:400;font-size:.75em;margin-left:2mm">${ts.length}チーム</small></div><div class="tl-cols"><div>${col(a)}</div><div>${b.map((t,i)=>`<div class="tl-row"><span>${half+i+1}</span>${nameCell(t.name,false)}<span class="c">${esc(t.pref||'')}</span></div>`).join('')}</div></div></div>`});});
   if(!blocks.length)blocks.push({html:'<p>チームデータがまだありません。「チームデータ」から登録してください。</p>'});
   return flow(ch,blocks);
 }
@@ -726,7 +739,7 @@ function drawGroups(ch){
 }
 function buildDraw(ch){
   const gs=drawGroups(ch),cols=+ch.data.cols||4;
-  const blocks=gs.map(g=>({html:`<div class="grp"><div class="gh">${esc(g.name)}</div><ol>${g.teams.map((t,i)=>`<li><span>${i+1}</span><span>${esc(t.name)}</span></li>`).join('')}</ol></div>`}));
+  const blocks=gs.map(g=>({html:`<div class="grp"><div class="gh">${esc(g.name)}</div><ol>${g.teams.map((t,i)=>`<li><span>${i+1}</span>${nameCell(t.name)}</li>`).join('')}</ol></div>`}));
   if(!blocks.length)blocks.push({html:'<p>ブロック情報がありません。チームデータの「ブロック」欄を入力するか、INFINEX大会速報のデータを取り込んでください。</p>'});
   const pages=flow(ch,blocks,{wrap:'drawgrid',wrapStyle:`--dc:${cols}`});
   if(ch.data.note){const last=pages[pages.length-1].el;$('.body',last).insertAdjacentHTML('beforeend',`<div class="notes" style="margin-top:4mm">${esc(ch.data.note).replace(/\n/g,'<br>')}</div>`);}
@@ -735,8 +748,8 @@ function buildDraw(ch){
 function buildSchedule(ch){
   const ss=parseSchedule(ch.data.body);
   const blocks=ss.map(s=>{const refs=s.matches.some(m=>m.ref||m.ref2);
-    const cols=refs?'<col style="width:15%"><col style="width:10%"><col><col style="width:4%"><col><col style="width:11%"><col style="width:11%">':'<col style="width:20%"><col style="width:10%"><col><col style="width:4%"><col>';
-    return {split:true,html:`<div class="blk"><div class="cap"><span>${esc(s.title)}</span><small>${esc(s.date)}${s.info?'　'+esc(s.info):''}</small></div><table class="t split"><colgroup>${cols}</colgroup><thead><tr><th>試合</th><th>開始</th><th colspan="3">対戦チーム</th>${refs?'<th>主審</th><th>補助審判</th>':''}</tr></thead><tbody>${s.matches.map(m=>`<tr><td style="text-align:center">${esc(m.order)}</td><td style="text-align:center">${esc(m.time)}</td><td>${esc(m.home)}</td><td style="text-align:center">:</td><td>${esc(m.away)}</td>${refs?`<td style="text-align:center">${esc(m.ref)}</td><td style="text-align:center">${esc(m.ref2)}</td>`:''}</tr>`).join('')}</tbody></table></div>`};});
+    const cols=refs?'<col style="width:15%"><col style="width:8%"><col style="width:26.5%"><col style="width:3%"><col style="width:26.5%"><col style="width:10.5%"><col style="width:10.5%">':'<col style="width:18%"><col style="width:8%"><col style="width:35.5%"><col style="width:3%"><col style="width:35.5%">';
+    return {split:true,html:`<div class="blk"><div class="cap"><span>${esc(s.title)}</span><small>${esc(s.date)}${s.info?'　'+esc(s.info):''}</small></div><table class="t split"><colgroup>${cols}</colgroup><thead><tr><th>試合</th><th>開始</th><th colspan="3">対戦チーム</th>${refs?'<th>主審</th><th>補助審判</th>':''}</tr></thead><tbody>${s.matches.map(m=>`<tr><td><div class="fl c"><span>${esc(m.order)}</span></div></td><td style="text-align:center">${esc(m.time)}</td><td>${nameCell(m.home)}</td><td class="sep">:</td><td>${nameCell(m.away)}</td>${refs?`<td><div class="fl c"><span>${esc(m.ref)}</span></div></td><td><div class="fl c"><span>${esc(m.ref2)}</span></div></td>`:''}</tr>`).join('')}</tbody></table></div>`};});
   if(ch.data.notes)blocks.push({html:`<div class="blk notes">${ch.data.notes.split('\n').map(l=>`<div>${esc(l)}</div>`).join('')}</div>`});
   if(!ss.length)blocks.unshift({html:'<p>試合日程がまだありません。</p>'});
   return flow(ch,blocks);
@@ -771,7 +784,7 @@ function teamCard(t,lay,showPhoto){
   const twoCol=lay!=='2'&&lay!=='6'&&ps.length>12;const half=Math.ceil(ps.length/2);
   const roster=`<div class="tc-roster" data-fit="${{'1':9.5,'2':8.5,'4':8,'6':7.2,'8':6.8}[lay]}">${ps.length?(twoCol?tbl(ps.slice(0,half))+tbl(ps.slice(half)):tbl(ps)):'<span style="opacity:.6">（選手名簿未登録）</span>'}</div>`;
   const logo=`<div class="tc-logo" style="${t.logo?bg(t.logo):'background:repeating-linear-gradient(45deg,#eee 0 2mm,#f7f7f7 2mm 4mm)'}"></div>`;
-  const head=`<div class="tc-h">${logo}<div class="tc-name"><b>${esc(t.name)}</b><small>${esc([t.pref,t.region].filter(Boolean).join('　'))}</small></div></div>`;
+  const head=`<div class="tc-h">${logo}<div class="tc-name"><b class="fl"><span>${esc(t.name)}</span></b><small>${esc([t.pref,t.region].filter(Boolean).join('　'))}</small></div></div>`;
   const ph={'1':'78mm','2':'auto','4':'38mm','6':'24mm','8':'0'}[lay];
   const photo=showPhoto&&lay!=='8'?`<div class="tc-photo" style="height:${ph};${t.photo?bg(t.photo):''}">${t.photo?'':'<div style="height:100%;display:flex;align-items:center;justify-content:center;color:#9aa;font-size:7pt">チーム写真</div>'}</div>`:'';
   const meta=`<div class="tc-meta">${t.coach?`<span>監督：${esc(t.coach)}</span>`:''}${t.staff?`<span>${esc(t.staff)}</span>`:''}</div>`;
@@ -805,15 +818,18 @@ function buildBracket(ch){
   const leaves=slots/2,R=Math.log2(leaves);
   const fsz=Math.max(2.2,Math.min(3.6,(H-24)/leaves*.42));
   const nameW=Math.min(42,Math.max(26,W*.2));const top=12,bot=6;const gap=(H-top-bot)/leaves;
-  const cx=W/2,stepX=R>0?(cx-nameW-10)/R:0;
+  const G=17;const cx=W/2,stepX=R>0?(cx-nameW-G)/R:0;
   const ink=th.base==='pro'?th.ink:'#000';const ac=th.base==='pro'?th.accent:'#000';
-  let s='';let mno=0;const lw=.3;
+  let s='';let mno=0;const lw=.3;const ov=[];
   const roundName=k=>{const fromEnd=R-k;return fromEnd===0?'準決勝':fromEnd===1?'準々決勝':`${k}回戦`;};
   const side=(arr,dir)=>{// dir 1 left, -1 right
     const x0=dir===1?0:W;let ys=arr.map((_,i)=>top+gap*i+gap/2);
     arr.forEach((t,i)=>{const bx=dir===1?x0:x0-nameW;
       const bh=Math.min(gap*.76,11);s+=`<rect x="${bx}" y="${ys[i]-bh/2}" width="${nameW}" height="${bh}" fill="${th.base==='pro'?th.soft:'#fff'}" stroke="${th.base==='pro'?'none':ink}" stroke-width="${lw}"/>`;
-      s+=`<text x="${dir===1?bx+1.5:bx+nameW-1.5}" y="${ys[i]}" font-size="${fsz}" dominant-baseline="central" text-anchor="${dir===1?'start':'end'}" fill="${ink}">${esc(t||'')}</text>`;});
+      const lg=t?logoOf(t):'';const ls=Math.min(bh-1.6,7);
+      if(lg)ov.push(`<i style="position:absolute;left:${((dir===1?bx+1.2:bx+nameW-1.2-ls)/W*100).toFixed(3)}%;top:${((ys[i]-ls/2)/H*100).toFixed(3)}%;width:${(ls/W*100).toFixed(3)}%;height:${(ls/H*100).toFixed(3)}%;${bg(lg)};background-size:contain;background-position:center;background-repeat:no-repeat"></i>`);
+      const tx=dir===1?bx+1.5+(lg?ls+1:0):bx+nameW-1.5-(lg?ls+1:0);
+      s+=`<text class="en" data-max="${nameW-3-(lg?ls+1:0)}" x="${tx}" y="${ys[i]}" font-size="${fsz}" dominant-baseline="central" text-anchor="${dir===1?'start':'end'}" fill="${ink}">${esc(t||'')}</text>`;});
     let x=dir===1?nameW:W-nameW;
     for(let k=1;k<=R;k++){const nx=dir===1?nameW+stepX*k:W-nameW-stepX*k;const ny=[];
       if(dir===1)s+=`<text x="${(x+nx)/2}" y="${top-4}" font-size="${2.6}" text-anchor="middle" fill="${ac}" font-weight="700">${roundName(k)}</text>`;
@@ -828,12 +844,13 @@ function buildBracket(ch){
   const L=side(ents.slice(0,leaves),1),Rr=side(ents.slice(leaves),-1);
   const fy=(L.y+Rr.y)/2;
   s+=`<path d="M${L.x} ${L.y}H${cx}M${Rr.x} ${Rr.y}H${cx}" stroke="${ac}" stroke-width="${lw*2}" fill="none"/>`;
-  const cy=Math.max(top+2,fy-Math.min(gap*1.2,40)-14);
+  const cy=Math.max(top+2,fy-20);
   s+=`<path d="M${cx} ${fy}V${cy+8}" stroke="${ac}" stroke-width="${lw*2}"/>`;
   s+=`<rect x="${cx-14}" y="${cy}" width="28" height="8" fill="${ac}"/><text x="${cx}" y="${cy+4}" fill="#fff" font-size="3.6" font-weight="700" text-anchor="middle" dominant-baseline="central">${esc(ch.data.champion||'優勝')}</text>`;
   s+=`<text x="${cx}" y="${fy+5}" font-size="3" text-anchor="middle" font-weight="700" fill="${ac}">決勝</text>`;
   if(ch.data.numbers&&labs[mno])s+=`<text x="${cx}" y="${fy+9}" font-size="2.3" text-anchor="middle" fill="${ac}">${esc(labs[mno])}</text>`;
-  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="${th.bf}, sans-serif">${s}</svg>`;
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="${th.bf}, sans-serif">${s}</svg>${ov.join('')}`;
+  box.querySelectorAll('text.en').forEach(t=>{try{const max=+t.dataset.max,len=t.getComputedTextLength();if(len>max)t.setAttribute('font-size',(fsz*max/len).toFixed(2));}catch(e){}});
   return [rec(pg,ch,'bracket')];
 }
 
@@ -847,7 +864,7 @@ function buildChapter(ch){
 function folioOf(i){const first=S.p.chapters[0];const off=(first&&first.type==='cover'&&!S.p.meta.countCover)?1:0;return i+1-off;}
 function paginate(){
   const st=stage();st.innerHTML='';
-  S._nums=chapterNumbers();S._tocEntries=[];
+  S._nums=chapterNumbers();S._tocEntries=[];S._logoMap=null;
   let all=[],starts={};
   const run=()=>{st.innerHTML='';all=[];starts={};
     S.p.chapters.forEach(ch=>{starts[ch.id]=all.length;all=all.concat(buildChapter(ch));});};
@@ -858,6 +875,7 @@ function paginate(){
       S._tocEntries=S.p.chapters.filter(c=>c.inToc&&!NOTOC.includes(c.type)).map(c=>({n:S._nums[c.id],title:c.title,page:folioOf(starts[c.id])}));
       const before=all.length;run();if(all.length===before)break;}
   }
+  all.forEach(r=>fitLines(r.el));
   // decorate: folio, running head, thumb tabs, parity
   const th=theme();const nums=S._nums;const tabN=Math.max(nums._count,1);const paper=PAPER[S.p.meta.paper];
   const tabH=Math.min(18,(paper.h-50)/tabN);

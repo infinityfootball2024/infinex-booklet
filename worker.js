@@ -241,6 +241,7 @@ export default {
       fail(404, '見つかりません');
     } catch (e) {
       if (e instanceof HttpError) return json({ error: e.message }, e.status);
+      if (/no such table/i.test(String(e && e.message))) return json({ error: 'データベースの表が作られていません。D1 のコンソールで schema.sql の内容を実行してください' }, 503);
       console.error(e);
       return json({ error: 'サーバーでエラーが発生しました' }, 500);
     }
